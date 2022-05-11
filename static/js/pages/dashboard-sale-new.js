@@ -1,6 +1,5 @@
 $(function () {
  var householdPrices = [
- {x:'2001',y:0.164},
  {x:'2002',y:0.173},
  {x:'2003',y:0.184},
  {x:'2004',y:0.167},
@@ -12,8 +11,10 @@ $(function () {
  {x:'2010',y:0.160},
  {x:'2011',y:0.176},
  {x:'2012',y:0.178}
- ]; var something = [
- {x:'2001',y:0.344},
+ ];
+
+ var something = [
+ {x:'2002',y:0.344},
  {x:'2002',y:0.453},
  {x:'2003',y:0.344},
  {x:'2004',y:0.657},
@@ -64,18 +65,22 @@ $(function () {
  text: "Цена (EUR per kWh)"
  }
  },
- dataSeries: [{
- seriesType: 'line',
- collectionAlias: "Бытовая",
- data: householdPrices
- }, {
- seriesType: 'line',
- collectionAlias: "Индустрия",
- data: industryPrices
- }, {
+ dataSeries: [
+ //     {
+ // seriesType: 'line',
+ // collectionAlias: "Бытовая",
+ // data: householdPrices
+ // },
+ //  {
+ // seriesType: 'line',
+ // collectionAlias: "Индустрия",
+ // data: industryPrices
+ // },
+  {
  seriesType: 'line',
  collectionAlias: "Индустрия",
  data: something
- }]
+ }
+ ]
  });
  });
