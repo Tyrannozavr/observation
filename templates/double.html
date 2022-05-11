@@ -1,87 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link type="text/css" rel="StyleSheet" href="https://bootstraptema.ru/plugins/2016/shieldui/style.css" />
-<script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
-<script src="https://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
-
-<br><br><br>
-
-<div class="container">
-<div class="row">
-<div class="col-md-8 col-md-offset-2">
-
-<!-- График --><div id="chart"></div>
-
+<script src="{% static 'js/chart/lib/liteChart.min.js' %}"></script>
+<div id="your-id" style="height: 400px;"></div>
 <script>
- $(function () {
- $("#chart").shieldChart({
- theme: "light",
- seriesSettings: {
- line: {
- dataPointText: {
- enabled: true
- }
- }
- },
- chartLegend: {
- align: 'center',
- borderRadius: 2,
- borderWidth: 2,
- verticalAlign: 'top'
- },
- exportOptions: {
- image: true,
- print: true
- },
- axisX: {
- {#categoricalValues: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016']#}
- categoricalValues: [
-          '17.06 00:46:12',
-          '17.06 01:53:14',
-          '17.06 07:22:14',
-          '17.06 16:27:14',
-          '17.06 21:06:14',
-          '18.06 06:20:14',
-          '18.06 11:24:14',
-          '18.06 17:19:14',
-          '18.06 20:10:14',
-          '18.06 23:13:14',
-          '19.06 00:24:14',
-          '19.06 06:33:14',
-        ]
+document.addEventListener("DOMContentLoaded", function(){
+	// Create liteChart.js Object
+	settings = {};
+	let d = new liteChart("chart", settings);
 
+	// Set labels
+	d.setLabels(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
 
- },
- axisY: {
- title: {
- text: "Цена (€ за kWh)"
- }
- },
- primaryHeader: {
- text: "Цены на электроэнергию"
- },
- dataSeries: [{
- seriesType: 'line',
- collectionAlias: 'Домохозяйство',
- data: [0.164, 0.173, 0.184, 0.114, 0.273, 0.384, 0.464, 0.123, 0.112, 0.124, 0.1, 0.17]
- }, {
- seriesType: 'line',
- collectionAlias: 'Индустрия',
- data: [0.342, 0.127, 0.321, 0.567, 0.324, 0.543, 0.342, 0.435, 0.564, 0.342, 0.234, 0.564]
- }]
- });
- });
- </script><!-- /.График -->
+	// Set legends and values
+	d.addLegend({"name": "Day", "stroke": "#CDDC39", "fill": "#fff", "values": [100, 200, 450, 400, 500, 300, 700, 800, 601, 705, 604, 803]});
+	d.addLegend({"name": "Night", "stroke": "#3b95f7", "fill": "#fff", "values": [200, 150, 240, 180, 150, 240, 230, 300, 200, 150, 270, 200]});
 
-</div><!-- /.col-md-8 col-md-offset-2 -->
-</div><!-- /.row -->
-</div><!-- /.container -->
+	// Inject chart into DOM object
+	let div = document.getElementById("your-id");
+	d.inject(div);
 
+	// Draw
+	d.draw();
+});
+</script>
 </body>
 </html>
