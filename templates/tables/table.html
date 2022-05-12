@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="table-responsive">
+     <table class="table table-hover table-dark">
+         <thead>
+             <tr>
+                 <th>id_obj</th>
+                 <th>id_ai</th>
+                 <th>datain</th>
+                 <th>mode</th>
+                 <th>aimax</th>
+                 <th>aimean</th>
+                 <th>aimin</th>
+                 <th>statmin</th>
+                 <th>statmax</th>
+                 <th>mlmin</th>
+                 <th>mlmax</th>
+                 <th>error</th>
+                 <th>confirm</th>
+             </tr>
+         </thead>
+         <tbody>
+             {% for i in data %}
+             <tr>
+                 <td>{{ i.mode }}</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td>$10</td>
+                 <td><a href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
+             </tr>
+             {% endfor %}
+         </tbody>
+     </table>
+    </div>
+<div>
+    {% for i in list %}
+        <div>
+        {{ i }}
+        </div>
+    {% endfor %}
+{#    {{ list }}#}
+</div>
+</body>
+</html>

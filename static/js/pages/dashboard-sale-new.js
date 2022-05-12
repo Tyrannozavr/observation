@@ -114,8 +114,8 @@ new Chart("myChart", {
       label: 'ai10',
       fill: false,
       lineTension: 0,
-      backgroundColor: "rgba(0,0,255,1.0)",
-      borderColor: "rgba(0,0,255,0.1)",
+      backgroundColor: "rgb(0,0,255)",
+      borderColor: "rgb(0,0,255)",
       data: ai10
     },
 

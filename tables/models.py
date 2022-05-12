@@ -8,9 +8,15 @@ class Objects(models.Model):
         verbose_name_plural = 'Objects'
         verbose_name = 'Object'
 
+    def __str__(self):
+        return self.name
+
 class Sensor(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Obj1Cmn(models.Model):
@@ -28,6 +34,9 @@ class Obj1Cmn(models.Model):
     ai8 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     ai9 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     ai10 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+
+    def __str__(self):
+        return self.id_obj.name
 
 class Obj1Ai(models.Model):
     id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
@@ -56,6 +65,9 @@ class Obj1Ai(models.Model):
     dataout = models.DateTimeField()
     datacheck = models.DateTimeField()
     cmnt = models.CharField(max_length=50)
+
+    def __str__(self):
+        return ': '.join([self.id_obj.name, self.id_ai.name])
 
 class Obj2Cmn(models.Model):
     id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
