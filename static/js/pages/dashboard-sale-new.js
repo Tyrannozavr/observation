@@ -235,21 +235,20 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
 }
 
 
-function getStatus(taskID) {
-  $.ajax({
-    url: `chart/`,
+function ajax_chart() {
+    $.ajax({
+    url: `/chart/`,
     method: 'GET'
-  })
-                        .done((res) => {
-                            // alert(res.ai2);
-                            // alert(ai2);
-updatechart(myChart, res.values, res.ai1, res.ai2, res.ai3, res.ai4, res.ai5, res.ai6, res.ai7, res.ai8, res.ai9, res.ai10);
-setTimeout(function() {
-getStatus(res.task_id);
-}, 30000);
-})
-  .fail((err) => {
+  }).done((res) => {
+updatechart(myChart, res.values, res.ai1, res.ai2, res.ai3, res.ai4, res.ai5, res.ai6, res.ai7, res.ai8, res.ai9, res.ai10);})
+      .fail((err) => {
     console.log(err)
   });
-}
-getStatus(1)
+};
+
+function getStatus1() {
+    ajax_chart();
+setTimeout(function() {
+getStatus1();
+}, 30000);}
+getStatus1()

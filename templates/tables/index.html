@@ -294,8 +294,10 @@
 
 <!-- [ Main Content ] start -->
 
-
 <div class="pc-container">
+<button onclick="filter(60)">60</button>
+<button onclick="filter(240)">240</button>
+<button onclick="filter(600)">600</button>
     <div class="pcoded-content">
 {#        <canvas id="myChart" style="width:100%;max-width:100%"></canvas>#}
 
@@ -305,6 +307,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="{% static 'js/pages/dashboard-sale-new.js' %}?{{ now }}"></script>
+<script src="{% static 'js/pages/filter_count.js' %}?{{ now }}"></script>
                     </div>
                     <div class="pro-scroll" style="height:255px;position:relative;">
                         <div class="card-body p-0">

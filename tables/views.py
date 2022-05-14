@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from time import time
 from .models import Obj1Cmn, Obj1Ai
 from django.http import JsonResponse
@@ -18,24 +18,28 @@ def table(request):
 
 def chart(request):
     model = Obj1Cmn
-    limited = 10
-
-    values = model.objects.values_list('date', flat=True)[:limited]
+    limit = 240
+    if request.session.get('filter', False):
+        limit = request.session['filter']
+    values = model.objects.values_list('date', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
      # 'values': list(model.objects.values_list('date', flat=True)),
      'values': values,
-        'ai1': list(model.objects.values_list('ai1', flat=True)[:limited]),
-        'ai2': list(model.objects.values_list('ai2', flat=True)[:limited]),
-        'ai3': list(model.objects.values_list('ai3', flat=True)[:limited]),
-        'ai4': list(model.objects.values_list('ai4', flat=True)[:limited]),
-        'ai5': list(model.objects.values_list('ai5', flat=True)[:limited]),
-        'ai6': list(model.objects.values_list('ai6', flat=True)[:limited]),
-        'ai7': list(model.objects.values_list('ai7', flat=True)[:limited]),
-        'ai8': list(model.objects.values_list('ai8', flat=True)[:limited]),
-        'ai9': list(model.objects.values_list('ai9', flat=True)[:limited]),
-        'ai10': list(model.objects.values_list('ai10', flat=True)[:limited]),
+        'ai1': list(model.objects.values_list('ai1', flat=True)[:limit]),
+        'ai2': list(model.objects.values_list('ai2', flat=True)[:limit]),
+        'ai3': list(model.objects.values_list('ai3', flat=True)[:limit]),
+        'ai4': list(model.objects.values_list('ai4', flat=True)[:limit]),
+        'ai5': list(model.objects.values_list('ai5', flat=True)[:limit]),
+        'ai6': list(model.objects.values_list('ai6', flat=True)[:limit]),
+        'ai7': list(model.objects.values_list('ai7', flat=True)[:limit]),
+        'ai8': list(model.objects.values_list('ai8', flat=True)[:limit]),
+        'ai9': list(model.objects.values_list('ai9', flat=True)[:limit]),
+        'ai10': list(model.objects.values_list('ai10', flat=True)[:limit]),
     }
     # return render(request, 'tables/chart.html', {'data': data})
     return JsonResponse(data)
 
+def set_table(request):
+    request.session['filter'] = int(request.GET.get('count', None))
+    return redirect('/')
