@@ -7,9 +7,13 @@ function getStatus(taskID) {
             },
             success: function(responce){
                     $('#table').append(responce); //Подгрузка внутрь блока с id=content
+                    setTimeout(function() {
+                    getStatus(1);
+}, 30000);
             },
             error: function(){
                 alert('Error!');
             }
         })}
 getStatus(1)
+
