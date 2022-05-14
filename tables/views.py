@@ -8,11 +8,12 @@ time = time()
 def index(request):
     return render(request, 'tables/index.html', {'now': time})
 
+
+'id_obj 	id_ai 	datain 	mode 	aimax 	aimean 	aimin 	statmin 	statmax 	mlmin 	mlmax 	error 	confirm'
 def table(request):
     model = Obj1Ai
-    data = model.objects.all()
-    list = Obj1Cmn.objects.values_list('ai1', flat=True)
-    return render(request, 'tables/table.html', {'data': data, 'list': list})
+    data = model.objects.all()[:20]
+    return render(request, 'tables/table.html', {'data': data})
 
 
 def chart(request):

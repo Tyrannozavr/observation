@@ -305,12 +305,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="{% static 'js/pages/dashboard-sale-new.js' %}?{{ now }}"></script>
-
-
                     </div>
                     <div class="pro-scroll" style="height:255px;position:relative;">
                         <div class="card-body p-0">
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="table">
                                 <table class="table table-hover table-dark">
 {#                                <table class="table table-hover m-b-0">#}
                                     <thead>
@@ -330,23 +328,25 @@
                                             <th>confirm</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td><a href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
-                                        </tr>
-                                    </tbody>
+                                     <tbody>
+                                         {% for i in data %}
+                                         <tr>
+                                             <td>{{ i.id_obj_id }} </td>
+                                             <td>{{ i.id_ai_id }}</td>
+                                             <td>{{ i.datain }}</td>
+                                             <td>{{ i.mode }}</td>
+                                             <td>{{ i.aimax }}</td>
+                                             <td>{{ i.aimean }}</td>
+                                             <td>{{ i.aimin }}</td>
+                                             <td>{{ i.statmin }}</td>
+                                             <td>{{ i.statmax }}</td>
+                                             <td>{{ i.mlmin }}</td>
+                                             <td>{{ i.mlmax }}</td>
+                                             <td>{{ i.err }}</td>
+                                             <td><a href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
+                                         </tr>
+                                         {% endfor %}
+                                     </tbody>
                                 </table>
                             </div>
                         </div>
@@ -355,6 +355,8 @@
             </div>
             <!-- customer-section end -->
         </div>
+
+    <script src="{% static 'js/pages/table_update.js' %}?{{ now }}"></script>
         <!-- [ Main Content ] end -->
 {#    </div>#}
 {#</div>#}

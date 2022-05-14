@@ -41,17 +41,18 @@ var xValues =  [
 
 var myChart = new Chart("myChart", {
   type: "line",
-    backgroundColor: 'rgba(251, 85, 85, 0.4)',
+
   data: {
     labels: xValues,
-    datasets: [{
+    pointHoverBackgroundColor: 'red',
+    datasets: [
+      {
       label: 'ai1',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 0, 0)",
       borderColor: "rgb(255,0,0)",
       data: ai1,
-
     },
         {
       label: 'ai2',
@@ -123,10 +124,10 @@ var myChart = new Chart("myChart", {
   options: {
     legend: {display: true},
     scales: {
-      yAxes: [{ticks: {min: 0, max:50}, gridLines: {
+      yAxes: [{ticks: {min: 0, max:60}, gridLines: {
                 display: true
               }}],
-      xAxes: [{ticks: {min: 6, max:600}, gridLines: {
+      xAxes: [{ticks: {min: 0, max:600}, gridLines: {
                 display: false
               }}],
 
@@ -144,7 +145,8 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       backgroundColor: "rgb(255, 0, 0)",
       borderColor: "rgb(255,0,0)",
       data: ai1,
-
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },
         {
       label: 'ai2',
@@ -152,7 +154,9 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       lineTension: 0,
       backgroundColor: "rgb(255, 156, 0)",
       borderColor: "rgb(255, 156, 0)",
-      data: ai2
+      data: ai2,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },
         {
       label:'ai3',
@@ -160,7 +164,9 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       lineTension: 0,
       backgroundColor: "rgb(255, 255, 0)",
       borderColor: "rgb(255, 255, 0)",
-      data: ai3
+      data: ai3,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },
         {
       label: 'ai4',
@@ -168,49 +174,62 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       lineTension: 0,
       backgroundColor: "rgb(215, 179, 104)",
       borderColor: "rgb(215, 179, 104)",
-      data: ai4
-    },           {
+      data: ai4,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',    },           {
       label: 'ai5',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(156, 117, 154)",
       borderColor: "rgb(156, 117, 154)",
-      data: ai5
+      data: ai5,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },           {
       label: 'ai6',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(0, 105, 65)",
       borderColor: "rgb(0, 105, 65)",
-      data: ai6
+      data: ai6,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },           {
       label: 'ai7',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(119, 118, 231)",
       borderColor: "rgb(119, 118, 231)",
-      data: ai7
+      data: ai7,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },           {
       label: 'ai8',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(178, 118, 231)",
       borderColor: "rgb(178, 118, 231)",
-      data: ai8
+      data: ai8,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },           {
       label: 'ai9',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(167, 184, 136)",
       borderColor: "rgb(167, 184, 136)",
-      data: ai9
+      data: ai9,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },           {
       label: 'ai10',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(0,0,255)",
       borderColor: "rgb(0,0,255)",
-      data: ai10
+      data: ai10,
+      pointBorderColor: 'transparent',
+      pointBackgroundColor: 'transparent',
     },];
     chart.update();
 }
