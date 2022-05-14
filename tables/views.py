@@ -7,12 +7,12 @@ time = time()
 
 def index(request):
     return render(request, 'tables/index.html', {'now': time})
-
+'Err > 0 and Sts = 1,'
 
 'id_obj 	id_ai 	datain 	mode 	aimax 	aimean 	aimin 	statmin 	statmax 	mlmin 	mlmax 	error 	confirm'
 def table(request):
     model = Obj1Ai
-    data = model.objects.all()[:20]
+    data = model.objects.filter(err__gt=0, sts=1)[:20]
     return render(request, 'tables/table.html', {'data': data})
 
 
@@ -42,4 +42,13 @@ def chart(request):
 
 def set_table(request):
     request.session['filter'] = int(request.GET.get('count', None))
+    return redirect('/')
+
+def confirm(request):
+    model = Obj1Ai
+    id = request.GET.get('id')
+    obj = model.objects.get(id=id)
+    obj.sts = 2
+    obj.save()
+    print(obj.sts)
     return redirect('/')
