@@ -293,15 +293,15 @@
 	<!-- [ Header ] end -->
 
 <!-- [ Main Content ] start -->
-
 <div class="pc-container">
-<button onclick="filter(60)">60</button>
-<button onclick="filter(240)">240</button>
-<button onclick="filter(600)">600</button>
     <div class="pcoded-content">
-{#        <canvas id="myChart" style="width:100%;max-width:100%"></canvas>#}
 
-        <!-- [ Main Content ] start -->
+{% block content %}
+
+<button onclick="filter_chart(60)">60</button>
+<button onclick="filter_chart(240)">240</button>
+<button onclick="filter_chart(600)">600</button>
+     <!-- [ Main Content ] start -->
             <div class="col-xxl-12">
                 <canvas id="myChart" style="width:100%;max-width:100%; padding-bottom:100px"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -311,9 +311,9 @@
                     </div>
                     <div class="pro-scroll" style="height:255px;position:relative;">
                     {% for filt in filters %}
-                        <button onclick="filter({{ filt }})">{{ filt }}</button>
+                        <button onclick="filter_table({{ filt }})">{{ filt }}</button>
                     {% endfor %}
-                    <button onclick="filter('None')">reset</button>
+                    <button onclick="filter_table('None')">reset</button>
                         <div class="card-body p-0">
                             <div class="table-responsive" id="table">
                                 <table class="table table-hover table-dark">
@@ -360,11 +360,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- customer-section end -->
-        </div>
+
 
     <script src="{% static 'js/pages/table_update.js' %}?{{ now }}"></script>
+    {% endblock %}
+            </div>
+            <!-- customer-section end -->
         <!-- [ Main Content ] end -->
 {#    </div>#}
 {#</div>#}

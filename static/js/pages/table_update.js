@@ -32,11 +32,11 @@ function autoupdate_table(){
 
 autoupdate_table()
 
-function filter(id) {
+function filter_table(id) {
     $.get('filter/', {'ai': id});
     setTimeout( function(){
         update_table();
-    }, 30)
+    }, 60)
 }
 
 

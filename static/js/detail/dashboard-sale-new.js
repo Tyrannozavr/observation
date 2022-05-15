@@ -11,7 +11,6 @@ var ai10 = [];
 var xValues =  [];
 var myChart = new Chart("myChart", {
   type: "line",
-
   data: {
     labels: xValues,
     pointHoverBackgroundColor: 'red',
@@ -106,111 +105,84 @@ var myChart = new Chart("myChart", {
   }
 });
 
-function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9, ai10) {
+
+function updatechart(chart, labels, mode, aimean, statmin, statmax, mlmin, mlmax, err) {
     chart.data.labels = labels
     chart.data.datasets = [{
-      label: 'ai1',
+      label: 'mode',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 0, 0)",
       borderColor: "rgb(255,0,0)",
-      data: ai1,
+      data: mode,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },
         {
-      label: 'ai2',
+      label: 'aimean',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 156, 0)",
       borderColor: "rgb(255, 156, 0)",
-      data: ai2,
+      data: aimean,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },
         {
-      label:'ai3',
+      label:'statmin',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 255, 0)",
       borderColor: "rgb(255, 255, 0)",
-      data: ai3,
+      data: statmin,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },
         {
-      label: 'ai4',
+      label: 'statmax',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(215, 179, 104)",
       borderColor: "rgb(215, 179, 104)",
-      data: ai4,
+      data: statmax,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',    },           {
-      label: 'ai5',
+      label: 'mlmin',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(156, 117, 154)",
       borderColor: "rgb(156, 117, 154)",
-      data: ai5,
+      data: mlmin,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai6',
+      label: 'mlmax',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(0, 105, 65)",
       borderColor: "rgb(0, 105, 65)",
-      data: ai6,
+      data: mlmax,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai7',
+      label: 'err',
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(119, 118, 231)",
       borderColor: "rgb(119, 118, 231)",
-      data: ai7,
-      pointBorderColor: 'transparent',
-      pointBackgroundColor: 'transparent',
-    },           {
-      label: 'ai8',
-      fill: false,
-      lineTension: 0,
-      backgroundColor: "rgb(178, 118, 231)",
-      borderColor: "rgb(178, 118, 231)",
-      data: ai8,
-      pointBorderColor: 'transparent',
-      pointBackgroundColor: 'transparent',
-    },           {
-      label: 'ai9',
-      fill: false,
-      lineTension: 0,
-      backgroundColor: "rgb(167, 184, 136)",
-      borderColor: "rgb(167, 184, 136)",
-      data: ai9,
-      pointBorderColor: 'transparent',
-      pointBackgroundColor: 'transparent',
-    },           {
-      label: 'ai10',
-      fill: false,
-      lineTension: 0,
-      backgroundColor: "rgb(0,0,255)",
-      borderColor: "rgb(0,0,255)",
-      data: ai10,
+      data: err,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },];
     chart.update();
 }
 
-
 function ajax_chart() {
     $.ajax({
-    url: `/chart/`,
+    url: `/detail_chart/`,
     method: 'GET'
   }).done((res) => {
-updatechart(myChart, res.values, res.ai1, res.ai2, res.ai3, res.ai4, res.ai5, res.ai6, res.ai7, res.ai8, res.ai9, res.ai10);})
+      updatechart(myChart, res.values, res.mode, res.aimean, res.statmin, res.statmax, res.mlmin, res.mlmax, res.err);})
       .fail((err) => {
     console.log(err)
   });

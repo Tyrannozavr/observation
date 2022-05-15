@@ -28,7 +28,6 @@ def chart(request):
     values = model.objects.values_list('date', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
-     # 'values': list(model.objects.values_list('date', flat=True)),
      'values': values,
         'ai1': list(model.objects.values_list('ai1', flat=True)[:limit]),
         'ai2': list(model.objects.values_list('ai2', flat=True)[:limit]),
@@ -41,10 +40,9 @@ def chart(request):
         'ai9': list(model.objects.values_list('ai9', flat=True)[:limit]),
         'ai10': list(model.objects.values_list('ai10', flat=True)[:limit]),
     }
-    # return render(request, 'tables/chart.html', {'data': data})
     return JsonResponse(data)
 
-def set_table(request):
+def count_chart(request):
     request.session['filter'] = int(request.GET.get('count', None))
     return redirect('/')
 
@@ -54,9 +52,42 @@ def confirm(request):
     obj = model.objects.get(id=id)
     obj.sts = 2
     obj.save()
-    print(obj.sts)
     return redirect('/')
 
 def filter(request):
     request.session['ai'] = request.GET.get('ai')
+    return redirect('/')
+
+def detail(request):
+    now = time
+    model = Obj1Ai
+    filters =set(model.objects.values_list('id_ai', flat=True))
+    return render(request, 'tables/detail.html', {'now': now, 'filters': filters})
+
+
+def detail_chart(request):
+    model = Obj1Ai
+    limit = 240
+    if request.session.get('detail_count', False):
+        limit = request.session['detail_count']
+    values = model.objects.values_list('datain', flat=True)[:limit]
+    values = [i.strftime('%d %B %H:%M') for i in values]
+    data = {
+     'values': values,
+        'mode': list(model.objects.values_list('mode', flat=True)[:limit]),
+        'aimean': list(model.objects.values_list('aimean', flat=True)[:limit]),
+        'statmin': list(model.objects.values_list('statmin', flat=True)[:limit]),
+        'statmax': list(model.objects.values_list('statmax', flat=True)[:limit]),
+        'mlmin': list(model.objects.values_list('mlmin', flat=True)[:limit]),
+        'mlmax': list(model.objects.values_list('mlmax', flat=True)[:limit]),
+        'err': list(model.objects.values_list('err', flat=True)[:limit]),
+    }
+    return JsonResponse(data)
+
+def detail_count(request):
+    request.session['detail_count'] = int(request.GET.get('detail_count'))
+    return redirect('/')
+
+def detail_filter(request):
+    request.session['detal_filter'] = request.GET.get('ai')
     return redirect('/')
