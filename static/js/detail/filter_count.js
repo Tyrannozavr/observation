@@ -3,3 +3,9 @@ function filter_chart(param) {
     setTimeout( function() {
     ajax_chart();
     }, 30)}
+
+function filter_ai(par) {
+    $.get('/detail_filter', {'ai': par});
+    setTimeout( function(){
+        ajax_chart();
+    }, 30)}

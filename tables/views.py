@@ -70,18 +70,21 @@ def detail_chart(request):
     limit = 240
     if request.session.get('detail_count', False):
         limit = request.session['detail_count']
-    values = model.objects.values_list('datain', flat=True)[:limit]
+    ai = request.session.get('detail_filter', False)
+    values = model.objects.filter(id_ai=ai).values_list('datain', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
      'values': values,
-        'mode': list(model.objects.values_list('mode', flat=True)[:limit]),
-        'aimean': list(model.objects.values_list('aimean', flat=True)[:limit]),
-        'statmin': list(model.objects.values_list('statmin', flat=True)[:limit]),
-        'statmax': list(model.objects.values_list('statmax', flat=True)[:limit]),
-        'mlmin': list(model.objects.values_list('mlmin', flat=True)[:limit]),
-        'mlmax': list(model.objects.values_list('mlmax', flat=True)[:limit]),
-        'err': list(model.objects.values_list('err', flat=True)[:limit]),
+        'mode': list(model.objects.filter(id_ai=ai).values_list('mode', flat=True)[:limit]),
+        'aimean': list(model.objects.filter(id_ai=ai).values_list('aimean', flat=True)[:limit]),
+        'statmin': list(model.objects.filter(id_ai=ai).values_list('statmin', flat=True)[:limit]),
+        'statmax': list(model.objects.filter(id_ai=ai).values_list('statmax', flat=True)[:limit]),
+        'mlmin': list(model.objects.filter(id_ai=ai).values_list('mlmin', flat=True)[:limit]),
+        'mlmax': list(model.objects.filter(id_ai=ai).values_list('mlmax', flat=True)[:limit]),
+        'err': list(model.objects.filter(id_ai=ai).values_list('err', flat=True)[:limit]),
     }
+    print(type(request.session.get('detail_filter')), request.session.get('detail_filter'))
+    print(model.objects.filter(id_ai=ai).count())
     return JsonResponse(data)
 
 def detail_count(request):
@@ -89,5 +92,5 @@ def detail_count(request):
     return redirect('/')
 
 def detail_filter(request):
-    request.session['detal_filter'] = request.GET.get('ai')
+    request.session['detail_filter'] = int(request.GET.get('ai'))
     return redirect('/')
