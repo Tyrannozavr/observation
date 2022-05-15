@@ -310,6 +310,10 @@
 <script src="{% static 'js/pages/filter_count.js' %}?{{ now }}"></script>
                     </div>
                     <div class="pro-scroll" style="height:255px;position:relative;">
+                    {% for filt in filters %}
+                        <button onclick="filter({{ filt }})">{{ filt }}</button>
+                    {% endfor %}
+                    <button onclick="filter('None')">reset</button>
                         <div class="card-body p-0">
                             <div class="table-responsive" id="table">
                                 <table class="table table-hover table-dark">

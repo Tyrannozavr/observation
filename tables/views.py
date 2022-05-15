@@ -6,13 +6,17 @@ time = time()
 
 
 def index(request):
-    return render(request, 'tables/index.html', {'now': time})
-'Err > 0 and Sts = 1,'
+    model = Obj1Ai
+    filters =set(model.objects.values_list('id_ai', flat=True))
+    return render(request, 'tables/index.html', {'now': time, 'filters': filters})
 
-'id_obj 	id_ai 	datain 	mode 	aimax 	aimean 	aimin 	statmin 	statmax 	mlmin 	mlmax 	error 	confirm'
 def table(request):
     model = Obj1Ai
-    data = model.objects.filter(err__gt=0, sts=1)[:20]
+    ai = request.session.get('ai', False)
+    if ai and ai != 'None':
+        data = model.objects.filter(err__gt=0, sts=1, id_ai=ai)[:20]
+    else:
+        data = model.objects.filter(err__gt=0, sts=1)[:20]
     return render(request, 'tables/table.html', {'data': data})
 
 
@@ -51,4 +55,8 @@ def confirm(request):
     obj.sts = 2
     obj.save()
     print(obj.sts)
+    return redirect('/')
+
+def filter(request):
+    request.session['ai'] = request.GET.get('ai')
     return redirect('/')

@@ -8,4 +8,5 @@ urlpatterns = [
     path('chart/', chart, name='chart'),
     path('set_table/', set_table, name='set_table'),
     path('confirm/', confirm, name='confirm'),
+    path('filter/', filter, name='filter'),
     ]
