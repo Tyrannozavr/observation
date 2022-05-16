@@ -1,7 +1,8 @@
 function update_table() {
     $.ajax({
-        url: 'table/',
+        url: '/table/',
         type: 'GET',
+        data: {'sorted': ''},
         beforeSend: function(){
             $('#table').empty();
         },

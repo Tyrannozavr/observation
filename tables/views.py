@@ -10,7 +10,6 @@ def count_error(ai, model=Obj1Ai):
 def count_error_double(request):
     ai = request.GET.get('ai', False)
     errors = int(count_error(ai))
-    # print(errors)
     return JsonResponse({'errors': errors})
 
 def index(request):
@@ -21,8 +20,12 @@ def index(request):
     return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors})
 
 def table(request):
+    sorted = bool(request.GET.get('sorted', True))
     model = Obj1Ai
-    data = model.objects.filter(err__gt=0, sts=1).order_by('-datain')[:20]
+    if sorted:
+        data = model.objects.filter(err__gt=0, sts=1).order_by('-datain')[:20]
+    else:
+        data = model.objects.filter(err__gt=0).order_by('-datain')[:20]
     return render(request, 'tables/table.html', {'data': data})
 
 
@@ -113,3 +116,10 @@ def detail_table(request, ai):
         data = model.objects.filter(err__gt=0, sts=1).order_by('-datain')[:20]
     return render(request, 'tables/table.html', {'data': data})
 
+def archive(request):
+    now = time
+    model = Obj1Ai
+    sensors =set(model.objects.values_list('id_ai', flat=True))
+    errors = (count_error(ai, model) for ai in sensors)
+    sensors_errors = list(zip(sensors, errors))
+    return render(request, 'tables/archive.html', {'now': now, 'sensors_errors': sensors_errors})

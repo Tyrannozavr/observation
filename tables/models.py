@@ -50,17 +50,17 @@ class Obj1Ai(models.Model):
     statmax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     mlmin = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     mlmax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    err = models.CharField(max_length=7, choices=(
+    err = models.CharField(max_length=7, null=False, blank=False, choices=(
             ('0', 'Система в норме'),
             ('1', 'Аварийная нижняя граница'),
             ('2', 'Предупредительная нижняя граница'),
             ('3', 'Предупредительная верхняя граница'),
             ('4', 'Аварийная верхняя граница'),)
     )
-    sts = models.CharField(max_length=7, choices=(
+    sts = models.CharField(max_length=7, null=False, blank=False, choices=(
            ('0', 'Система в норме'),
            ('1', 'Не подтвержден'),
-           ('2', 'Подтвержден'))
+           ('2', 'Подтвержден'), )
     )
     dataout = models.DateTimeField()
     datacheck = models.DateTimeField()

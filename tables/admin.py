@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import *
 
+
 @admin.register(Obj1Ai)
 class Obj1AiAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ['datain']
+    ordering = ['-datain']
 
 @admin.register(Obj2Ai)
 class Obj2AiAdmin(admin.ModelAdmin):

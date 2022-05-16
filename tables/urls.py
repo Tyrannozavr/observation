@@ -18,4 +18,5 @@ urlpatterns = [
     # path('detail_table/', detail_table, name='detail_table'),
     path('detail/<int:ai>/table/', detail_table, name='detail_table'),
     path('count_error/', count_error_double, name='count_error'),
+    path('archive/', archive, name='archive'),
     ]
