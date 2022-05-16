@@ -13,4 +13,5 @@ urlpatterns = [
     path('detail_chart/', detail_chart, name='detail_chart'),
     path('detail_count/', detail_count, name='detail_count'),
     path('detail_filter/', detail_filter, name='detail_filter'),
+    path('detail_table/', detail_table, name='detail_table'),
     ]

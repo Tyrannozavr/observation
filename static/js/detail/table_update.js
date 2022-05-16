@@ -1,6 +1,6 @@
 function update_table() {
     $.ajax({
-        url: '/table/',
+        url: '/detail_table/',
         type: 'GET',
         beforeSend: function(){
             $('#table').empty();
@@ -26,7 +26,7 @@ function autoupdate_table(){
     update_table();
     setTimeout( function(){
         autoupdate_table();
-    }, 30000)
+    }, 60000)
 }
 // update_table();
 autoupdate_table();

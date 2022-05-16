@@ -192,5 +192,5 @@ function getStatus1() {
     ajax_chart();
 setTimeout(function() {
 getStatus1();
-}, 30000);}
+}, 60000);}
 getStatus1()

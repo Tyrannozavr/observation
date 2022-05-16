@@ -22,7 +22,9 @@
                  <th>mlmin</th>
                  <th>mlmax</th>
                  <th>error</th>
+                 <th>sts</th>
                  <th>confirm</th>
+
              </tr>
          </thead>
          <tbody>
@@ -40,9 +42,9 @@
                  <td>{{ i.mlmin }}</td>
                  <td>{{ i.mlmax }}</td>
                  <td>{{ i.err }}</td>
+                 <td>{{ i.sts }}</td>
 {#                 <td><a href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>#}
                  <td><a onclick="confirm({{ i.id }})"  href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
-
              </tr>
              {% endfor %}
          </tbody>

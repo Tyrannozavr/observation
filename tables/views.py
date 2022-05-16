@@ -12,11 +12,7 @@ def index(request):
 
 def table(request):
     model = Obj1Ai
-    ai = request.session.get('ai', False)
-    if ai and ai != 'None':
-        data = model.objects.filter(err__gt=0, sts=1, id_ai=ai)[:20]
-    else:
-        data = model.objects.filter(err__gt=0, sts=1)[:20]
+    data = model.objects.filter(err__gt=0, sts=1).order_by('-datain')[:20]
     return render(request, 'tables/table.html', {'data': data})
 
 
@@ -62,7 +58,8 @@ def detail(request):
     now = time
     model = Obj1Ai
     filters =set(model.objects.values_list('id_ai', flat=True))
-    return render(request, 'tables/detail.html', {'now': now, 'filters': filters})
+    sensor = request.session.get('detail_filter', 'udefinded')
+    return render(request, 'tables/detail.html', {'now': now, 'filters': filters, 'sensor': sensor})
 
 
 def detail_chart(request):
@@ -83,8 +80,6 @@ def detail_chart(request):
         'mlmax': list(model.objects.filter(id_ai=ai).values_list('mlmax', flat=True)[:limit]),
         'err': list(model.objects.filter(id_ai=ai).values_list('err', flat=True)[:limit]),
     }
-    print(type(request.session.get('detail_filter')), request.session.get('detail_filter'))
-    print(model.objects.filter(id_ai=ai).count())
     return JsonResponse(data)
 
 def detail_count(request):
@@ -94,3 +89,13 @@ def detail_count(request):
 def detail_filter(request):
     request.session['detail_filter'] = int(request.GET.get('ai'))
     return redirect('/')
+
+def detail_table(request):
+    model = Obj1Ai
+    ai = request.session.get('ai', False)
+    if ai and ai != 'None':
+        data = model.objects.filter(err__gt=0, sts=1, id_ai=ai).order_by('-datain')[:20]
+    else:
+        data = model.objects.filter(err__gt=0, sts=1).order_by('-datain')[:20]
+    return render(request, 'tables/table.html', {'data': data})
+

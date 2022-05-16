@@ -131,7 +131,7 @@
 						<a href="../../static/dist/chart-apex.html" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">bubble_chart</i></span><span class="pc-mtext">Chart</span></a>
 					</li>
 					<li class="pc-item">
-						<a href="../../static/dist/map-google.html" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">my_location</i></span><span class="pc-mtext">Maps</span></a>
+						<a href="{% url 'detail' %}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">my_location</i></span><span class="pc-mtext">Detail information</span></a>
 					</li>
 					<li class="pc-item pc-caption">
 						<label>Pages</label>
@@ -310,10 +310,10 @@
 <script src="{% static 'js/pages/filter_count.js' %}?{{ now }}"></script>
                     </div>
                     <div class="pro-scroll" style="height:255px;position:relative;">
-                    {% for filt in filters %}
-                        <button onclick="filter_table({{ filt }})">{{ filt }}</button>
-                    {% endfor %}
-                    <button onclick="filter_table('None')">reset</button>
+{#                    {% for filt in filters %}#}
+{#                        <button onclick="filter_table({{ filt }})">{{ filt }}</button>#}
+{#                    {% endfor %}#}
+{#                    <button onclick="filter_table('None')">reset</button>#}
                         <div class="card-body p-0">
                             <div class="table-responsive" id="table">
                                 <table class="table table-hover table-dark">
@@ -332,6 +332,7 @@
                                             <th>mlmin</th>
                                             <th>mlmax</th>
                                             <th>error</th>
+                                            <th>sts</th>
                                             <th>confirm</th>
                                         </tr>
                                     </thead>
@@ -349,6 +350,7 @@
                                              <td>{{ i.statmax }}</td>
                                              <td>{{ i.mlmin }}</td>
                                              <td>{{ i.mlmax }}</td>
+                                             <td>{{ i.sts }}</td>
                                              <td>{{ i.err }}</td>
                                              <td><a onclick="update_table()">button</a></td>
 {#                                             <td><a  href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>#}
