@@ -1,0 +1,91 @@
+{% extends 'tables/index.html' %}
+{% load static %}
+{% block content %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <div class="col-xxl-12">
+    <div class="col-6">
+
+    </div>
+        <div class="col-6">
+        </div>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <div class="col-sm">
+    <button onclick="filter_chart(60)">60</button>
+    <button onclick="filter_chart(240)">240</button>
+    <button onclick="filter_chart(600)">600</button>
+    </div>
+{#    <div class="col-sm">#}
+{#    {% for ai in filters %}#}
+{#        <button onclick="filter_ai({{ ai }})">{{ ai }}</button>#}
+{#    {% endfor %}#}
+{#    </div>#}
+{#    <div class="col-sm">#}
+{#    sensor: <a id="sensor">{{ sensor }}</a>#}
+{#    </div>#}
+  </div>
+</div>
+
+    <canvas id="myChart" style="width:100%;max-width:100%; padding-bottom:100px"></canvas>
+    </div>
+
+    <div class="pro-scroll" style="height:255px;position:relative;">
+{#    {% for filt in filters %}#}
+{#        <button onclick="filter_table({{ filt }})">{{ filt }}</button>#}
+{#    {% endfor %}#}
+{##}
+{#    <button onclick="filter_table('None')">reset</button>#}
+        <div class="card-body p-0">
+            <div class="table-responsive" id="table">
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th>id_obj</th>
+                            <th>id_ai</th>
+                            <th>datain</th>
+                            <th>mode</th>
+                            <th>aimax</th>
+                            <th>aimean</th>
+                            <th>aimin</th>
+                            <th>statmin</th>
+                            <th>statmax</th>
+                            <th>mlmin</th>
+                            <th>mlmax</th>
+                            <th>error</th>
+                            <th>confirm</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                         {% for i in data %}
+                         <tr>
+                             <td>{{ i.id_obj_id }} </td>
+                             <td>{{ i.id_ai_id }}</td>
+                             <td>{{ i.datain }}</td>
+                             <td>{{ i.mode }}</td>
+                             <td>{{ i.aimax }}</td>
+                             <td>{{ i.aimean }}</td>
+                             <td>{{ i.aimin }}</td>
+                             <td>{{ i.statmin }}</td>
+                             <td>{{ i.statmax }}</td>
+                             <td>{{ i.mlmin }}</td>
+                             <td>{{ i.mlmax }}</td>
+                             <td>{{ i.err }}</td>
+                             <td><a onclick="update_table()">button</a></td>
+                             <td><a  href="#"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
+                         </tr>
+                         {% endfor %}
+                     </tbody>
+                </table>
+                </div>
+    </div>
+
+    <script src="{% static 'js/detail/table_update.js' %}?{{ now }}"></script>
+    <script src="{% static 'js/detail/filter_count.js' %}?{{ now }}"></script>
+    <script src="{% static 'js/detail/dashboard-sale-new.js'%}?{{ now }}"></script>
+
+{% endblock %}
+</div>
