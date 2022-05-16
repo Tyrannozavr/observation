@@ -1,6 +1,6 @@
 function update_table() {
     $.ajax({
-        url: '/detail_table/',
+        url: 'table/',
         type: 'GET',
         beforeSend: function(){
             $('#table').empty();
@@ -14,12 +14,27 @@ function update_table() {
     })
 }
 
-function confirm(id) {
+function confirm(id, ai) {
     $.get('/confirm/', {'id': id});
     setTimeout( function(){
         update_table();
-    }, 30)
-
+    }, 30);
+    // let errors = $.get('/count_error', {'ai': ai});
+    // alert(errors);
+    // $('#id').empty();
+    // $('#id').append(errors);
+    $.ajax({
+        url: '/count_error',
+        data: {'ai': ai},
+        type: 'GET',
+        beforeSend: function() {
+            $('#'+ai).empty();
+        },
+        success: function(res) {
+            // alert(ai === 112);
+            $('#'+ai).append(res.errors);
+        },
+    })
 }
 
 function autoupdate_table(){

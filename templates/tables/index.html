@@ -87,19 +87,13 @@
 						<span>UI Components</span>
 					</li>
 					<li class="pc-item pc-hasmenu">
-						<a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Basic</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+						<a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Detail information</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
 						<ul class="pc-submenu">
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_alert.html">Alert</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_button.html">Button</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_badges.html">Badges</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_breadcrumb-pagination.html">Breadcrumb & paggination</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_card.html">Cards</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_collapse.html">Collapse</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_carousel.html">Carousel</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_progress.html">Progress</a></li>
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_modal.html">Modal</a></li>
-
-							<li class="pc-item"><a class="pc-link" href="../../static/dist/bc_typography.html">Typography</a></li>
+                            {% for ai, err in sensors_errors %}
+{#                                <li>1</li>#}
+{#							<li class="pc-item"><a class="pc-link" href="{% url 'detail' %}{{ ai }}/">{{ ai }}</a></li>#}
+							<li class="pc-item"><a class="pc-link" href="{% url 'detail'  ai %}">{{ ai }} errors: <span id="{{ ai }}">{{ err }}</span></a></li>
+                            {% endfor %}
 						</ul>
 					</li>
 					<li class="pc-item">
@@ -131,7 +125,7 @@
 						<a href="../../static/dist/chart-apex.html" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">bubble_chart</i></span><span class="pc-mtext">Chart</span></a>
 					</li>
 					<li class="pc-item">
-						<a href="{% url 'detail' %}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">my_location</i></span><span class="pc-mtext">Detail information</span></a>
+						<a href="{% url 'detail' 111 %}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">my_location</i></span><span class="pc-mtext">Detail information</span></a>
 					</li>
 					<li class="pc-item pc-caption">
 						<label>Pages</label>
@@ -352,8 +346,8 @@
                                              <td>{{ i.mlmax }}</td>
                                              <td>{{ i.sts }}</td>
                                              <td>{{ i.err }}</td>
-                                             <td><a onclick="update_table()">button</a></td>
-{#                                             <td><a  href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>#}
+{#                                             <td><a onclick="update_table()">button</a></td>#}
+                                             <td><a  href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
                                          </tr>
                                          {% endfor %}
                                      </tbody>

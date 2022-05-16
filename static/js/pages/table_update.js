@@ -12,15 +12,26 @@ function update_table(id) {
         error: function(){
             console.log('error')
         }
-    })
+    });
 }
 
-function confirm(id) {
+function confirm(id, ai) {
     $.get('confirm/', {'id': id});
     setTimeout( function(){
         update_table();
-    }, 30)
-
+    }, 30);
+    $.ajax({
+        url: '/count_error',
+        data: {'ai': ai},
+        type: 'GET',
+        beforeSend: function() {
+            $('#'+ai).empty();
+        },
+        success: function(res) {
+            // alert(ai === 112);
+            $('#'+ai).append(res.errors);
+        },
+    })
 }
 
 function autoupdate_table(){

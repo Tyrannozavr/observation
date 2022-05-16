@@ -179,7 +179,7 @@ function updatechart(chart, labels, mode, aimean, statmin, statmax, mlmin, mlmax
 
 function ajax_chart() {
     $.ajax({
-    url: `/detail_chart/`,
+    url: `chart/`,
     method: 'GET'
   }).done((res) => {
       updatechart(myChart, res.values, res.mode, res.aimean, res.statmin, res.statmax, res.mlmin, res.mlmax, res.err);})

@@ -44,7 +44,7 @@
                  <td>{{ i.err }}</td>
                  <td>{{ i.sts }}</td>
 {#                 <td><a href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>#}
-                 <td><a onclick="confirm({{ i.id }})"  href="#confirm"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
+                 <td><a onclick="confirm({{ i.id }}, {{ i.id_ai_id }})"  href="#"><i class="icon feather icon-edit f-16  text-success"></i></a></td>
              </tr>
              {% endfor %}
          </tbody>

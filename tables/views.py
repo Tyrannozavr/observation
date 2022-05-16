@@ -4,11 +4,21 @@ from .models import Obj1Cmn, Obj1Ai
 from django.http import JsonResponse
 time = time()
 
+def count_error(ai, model=Obj1Ai):
+    return model.objects.filter(id_ai=ai, err__gt=0, sts=1).count()
+
+def count_error_double(request):
+    ai = request.GET.get('ai', False)
+    errors = int(count_error(ai))
+    # print(errors)
+    return JsonResponse({'errors': errors})
 
 def index(request):
     model = Obj1Ai
-    filters =set(model.objects.values_list('id_ai', flat=True))
-    return render(request, 'tables/index.html', {'now': time, 'filters': filters})
+    sensors =set(model.objects.values_list('id_ai', flat=True))
+    errors = (count_error(ai, model) for ai in sensors)
+    sensors_errors = list(zip(sensors, errors))
+    return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors})
 
 def table(request):
     model = Obj1Ai
@@ -38,10 +48,6 @@ def chart(request):
     }
     return JsonResponse(data)
 
-def count_chart(request):
-    request.session['filter'] = int(request.GET.get('count', None))
-    return redirect('/')
-
 def confirm(request):
     model = Obj1Ai
     id = request.GET.get('id')
@@ -54,20 +60,28 @@ def filter(request):
     request.session['ai'] = request.GET.get('ai')
     return redirect('/')
 
-def detail(request):
+def count_chart(request):
+    request.session['filter'] = int(request.GET.get('count', None))
+    return redirect('/')
+
+
+def detail(request, ai):
     now = time
     model = Obj1Ai
     filters =set(model.objects.values_list('id_ai', flat=True))
-    sensor = request.session.get('detail_filter', 'udefinded')
-    return render(request, 'tables/detail.html', {'now': now, 'filters': filters, 'sensor': sensor})
+    # sensor = request.session.get('detail_filter', 'udefinded')
+    sensors =set(model.objects.values_list('id_ai', flat=True))
+    errors = (count_error(ai, model) for ai in sensors)
+    sensors_errors = list(zip(sensors, errors))
+    return render(request, 'tables/detail.html', {'now': now, 'filters': filters, 'sensors_errors': sensors_errors})
 
 
-def detail_chart(request):
+def detail_chart(request, ai):
     model = Obj1Ai
     limit = 240
     if request.session.get('detail_count', False):
         limit = request.session['detail_count']
-    ai = request.session.get('detail_filter', False)
+    # ai = request.session.get('detail_filter', False)
     values = model.objects.filter(id_ai=ai).values_list('datain', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
@@ -90,9 +104,9 @@ def detail_filter(request):
     request.session['detail_filter'] = int(request.GET.get('ai'))
     return redirect('/')
 
-def detail_table(request):
+def detail_table(request, ai):
     model = Obj1Ai
-    ai = request.session.get('ai', False)
+    # ai = request.session.get('ai', False)
     if ai and ai != 'None':
         data = model.objects.filter(err__gt=0, sts=1, id_ai=ai).order_by('-datain')[:20]
     else:
