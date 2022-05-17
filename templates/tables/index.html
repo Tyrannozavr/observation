@@ -90,15 +90,26 @@
 						<a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Detail information</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
 						<ul class="pc-submenu">
                             {% for ai, err in sensors_errors %}
-{#                                <li>1</li>#}
-{#							<li class="pc-item"><a class="pc-link" href="{% url 'detail' %}{{ ai }}/">{{ ai }}</a></li>#}
 							<li class="pc-item"><a class="pc-link" href="{% url 'detail'  ai %}">{{ ai }} errors: <span id="{{ ai }}">{{ err }}</span></a></li>
                             {% endfor %}
 						</ul>
 					</li>
+
 					<li class="pc-item">
 						<a href="{% url 'archive' %}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">history_edu</i></span><span class="pc-mtext">archive</span></a>
 					</li>
+                {% if user.is_staff %}
+                    <li class="pc-item">
+                    <a class="pc-link">Please, select user, who you want to check</a>
+                        {% for user in users %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ user }}" name="user">
+                                <input class="btn-dark" type="submit" value="{{ user }}">
+                            </form>
+                        {% endfor %}
+                    </li>
+                {% endif %}
 				</ul>
 			</div>
 		</div>
@@ -107,87 +118,25 @@
 	<!-- [ Header ] start -->
 	<header class="pc-header ">
 		<div class="header-wrapper">
-{#			<div class="mr-auto pc-mob-drp">#}
-{#				<ul class="list-unstyled">#}
-{#					<li class="dropdown pc-h-item">#}
-{#						<a class="pc-head-link active dropdown-toggle arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">#}
-{#							Level#}
-{#						</a>#}
-{#						<div class="dropdown-menu pc-h-dropdown">#}
-{#							<a href="#!" class="dropdown-item">#}
-{#								<i class="material-icons-two-tone">account_circle</i>#}
-{#								<span>My Account</span>#}
-{#							</a>#}
-{#							<div class="pc-level-menu">#}
-{#								<a href="#!" class="dropdown-item">#}
-{#									<i class="material-icons-two-tone">list_alt</i>#}
-{#									<span class="float-right"><i data-feather="chevron-right" class="mr-0"></i></span>#}
-{#									<span>Level2.1</span>#}
-{#								</a>#}
-{#								<div class="dropdown-menu pc-h-dropdown">#}
-{#									<a href="#!" class="dropdown-item">#}
-{#										<i class="fas fa-circle"></i>#}
-{#										<span>My Account</span>#}
-{#									</a>#}
-{#									<a href="#!" class="dropdown-item">#}
-{#										<i class="fas fa-circle"></i>#}
-{#										<span>Settings</span>#}
-{#									</a>#}
-{#									<a href="#!" class="dropdown-item">#}
-{#										<i class="fas fa-circle"></i>#}
-{#										<span>Support</span>#}
-{#									</a>#}
-{#									<a href="#!" class="dropdown-item">#}
-{#										<i class="fas fa-circle"></i>#}
-{#										<span>Lock Screen</span>#}
-{#									</a>#}
-{#									<a href="#!" class="dropdown-item">#}
-{#										<i class="fas fa-circle"></i>#}
-{#										<span>Logout</span>#}
-{#									</a>#}
-{#								</div>#}
-{#							</div>#}
-{#							<a href="#!" class="dropdown-item">#}
-{#								<i class="material-icons-two-tone">settings</i>#}
-{#								<span>Settings</span>#}
-{#							</a>#}
-{#							<a href="#!" class="dropdown-item">#}
-{#								<i class="material-icons-two-tone">support</i>#}
-{#								<span>Support</span>#}
-{#							</a>#}
-{#							<a href="#!" class="dropdown-item">#}
-{#								<i class="material-icons-two-tone">https</i>#}
-{#								<span>Lock Screen</span>#}
-{#							</a>#}
-{#							<a href="#!" class="dropdown-item">#}
-{#								<i class="material-icons-two-tone">chrome_reader_mode</i>#}
-{#								<span>Logout</span>#}
-{#							</a>#}
-{#						</div>#}
-{#					</li>#}
-{#				</ul>#}
-{#			</div>#}
 			<div class="ml-auto">
 				<ul class="list-unstyled">
 					<li class="dropdown pc-h-item">
-{#						<a class="pc-head-link dropdown-toggle arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">#}
-{#							<i class="material-icons-two-tone">search</i>#}
-{#						</a>#}
-{#						<div class="dropdown-menu dropdown-menu-right pc-h-dropdown drp-search">#}
-{#							<form class="px-3">#}
-{#								<div class="form-group mb-0 d-flex align-items-center">#}
-{#									<i data-feather="search"></i>#}
-{#									<input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">#}
-{#								</div>#}
-{#							</form>#}
-{#						</div>#}
 					</li>
 					<li class="dropdown pc-h-item">
 						<a class="pc-head-link dropdown-toggle arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-							<img src="../../static/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
+{#							<img src="../../static/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">#}
+                            {% if user.is_staff %}
+                                <img src="" alt="A" class="user-avtar">
+                            {% else %}
+                                <img src="" alt="C" class="user-avtar">
+                           {% endif %}
 							<span>
-								<span class="user-name">Joseph William</span>
-								<span class="user-desc">Administrator</span>
+								<span class="user-name">{{ user.username }}</span>
+                                {% if user.is_staff %}
+   								    <span class="user-desc">Administrator</span>
+                                {% else %}
+                                    <span class="user-desc">user</span>
+                                {% endif %}
 							</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right pc-h-dropdown">
