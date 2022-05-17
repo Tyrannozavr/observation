@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from time import time
 from .models import Obj1Cmn, Obj1Ai
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 time = time()
 
 def count_error(ai, model=Obj1Ai):
@@ -12,12 +14,27 @@ def count_error_double(request):
     errors = int(count_error(ai))
     return JsonResponse({'errors': errors})
 
+@login_required(login_url='authenticate/')
 def index(request):
+    if request.POST:
+        if bool(request.POST.get('logout', False)):
+            logout(request)
+            return redirect('authenticate/')
     model = Obj1Ai
     sensors =set(model.objects.values_list('id_ai', flat=True))
     errors = (count_error(ai, model) for ai in sensors)
     sensors_errors = list(zip(sensors, errors))
     return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors})
+
+def auth_user(request):
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+    return render(request, 'authenticate/auth-signin.html')
 
 def table(request):
     sorted = bool(request.GET.get('sorted', True))
@@ -45,7 +62,6 @@ def chart(request):
         data[field.verbose_name] = list(model.objects.order_by('-date').values_list(field.verbose_name, flat=True)[:limit])
     data['count'] = len(titles)
     data['titles'] = titles
-    print(data['values'])
     return JsonResponse(data)
 
 def confirm(request):
@@ -69,7 +85,6 @@ def detail(request, ai):
     now = time
     model = Obj1Ai
     filters =set(model.objects.values_list('id_ai', flat=True))
-    # sensor = request.session.get('detail_filter', 'udefinded')
     sensors =set(model.objects.values_list('id_ai', flat=True))
     errors = (count_error(ai, model) for ai in sensors)
     sensors_errors = list(zip(sensors, errors))
@@ -81,7 +96,6 @@ def detail_chart(request, ai):
     limit = 240
     if request.session.get('detail_count', False):
         limit = request.session['detail_count']
-    # ai = request.session.get('detail_filter', False)
     values = model.objects.filter(id_ai=ai).order_by('-datain').values_list('datain', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
