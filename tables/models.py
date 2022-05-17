@@ -39,8 +39,8 @@ class Obj1Cmn(models.Model):
         return self.id_obj.name
 
 class Obj1Ai(models.Model):
-    id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
     id_ai = models.ForeignKey(Sensor, on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     datain = models.DateTimeField()
     mode = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     aimax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -64,13 +64,14 @@ class Obj1Ai(models.Model):
     )
     dataout = models.DateTimeField()
     datacheck = models.DateTimeField()
-    cmnt = models.CharField(max_length=50)
+    cmnt = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return ': '.join([self.id_obj.name, self.id_ai.name])
+        return self.id_ai.name
+        # return ': '.join([self.id_obj.name, self.id_ai.name])
 
 class Obj2Cmn(models.Model):
-    id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
+    id_obj = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     amount = models.IntegerField()
     date = models.DateTimeField()
     mode = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -111,4 +112,4 @@ class Obj2Ai(models.Model):
     )
     dataout = models.DateTimeField()
     datacheck = models.DateTimeField()
-    cmnt = models.CharField(max_length=50)
+    cmnt = models.CharField(max_length=50, null=True, blank=True)

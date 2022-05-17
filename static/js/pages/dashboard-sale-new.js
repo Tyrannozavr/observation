@@ -106,10 +106,10 @@ var myChart = new Chart("myChart", {
   }
 });
 
-function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9, ai10) {
+function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9, ai10, count, titles) {
     chart.data.labels = labels
     chart.data.datasets = [{
-      label: 'ai1',
+      label: titles[0],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 0, 0)",
@@ -119,7 +119,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBackgroundColor: 'transparent',
     },
         {
-      label: 'ai2',
+      label: titles[1],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 156, 0)",
@@ -129,7 +129,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBackgroundColor: 'transparent',
     },
         {
-      label:'ai3',
+      label:titles[2],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(255, 255, 0)",
@@ -139,7 +139,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBackgroundColor: 'transparent',
     },
         {
-      label: 'ai4',
+      label: titles[3],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(215, 179, 104)",
@@ -147,7 +147,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       data: ai4,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',    },           {
-      label: 'ai5',
+      label: titles[4],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(156, 117, 154)",
@@ -156,7 +156,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai6',
+      label: titles[5],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(0, 105, 65)",
@@ -165,7 +165,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai7',
+      label: titles[6],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(119, 118, 231)",
@@ -174,7 +174,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai8',
+      label: titles[7],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(178, 118, 231)",
@@ -183,7 +183,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai9',
+      label: titles[8],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(167, 184, 136)",
@@ -192,7 +192,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
     },           {
-      label: 'ai10',
+      label: titles[9],
       fill: false,
       lineTension: 0,
       backgroundColor: "rgb(0,0,255)",
@@ -200,7 +200,7 @@ function updatechart(chart, labels, ai1, ai2, ai3, ai4, ai5, ai6, ai7, ai8, ai9,
       data: ai10,
       pointBorderColor: 'transparent',
       pointBackgroundColor: 'transparent',
-    },];
+    },].slice(0, count);
     chart.update();
 }
 
@@ -210,7 +210,7 @@ function ajax_chart() {
     url: `/chart/`,
     method: 'GET'
   }).done((res) => {
-updatechart(myChart, res.values, res.ai1, res.ai2, res.ai3, res.ai4, res.ai5, res.ai6, res.ai7, res.ai8, res.ai9, res.ai10);})
+updatechart(myChart, res.values, res.ai1, res.ai2, res.ai3, res.ai4, res.ai5, res.ai6, res.ai7, res.ai8, res.ai9, res.ai10, res.count, res.titles);})
       .fail((err) => {
     console.log(err)
   });

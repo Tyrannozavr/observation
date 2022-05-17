@@ -36,19 +36,31 @@ def chart(request):
         limit = request.session['filter']
     values = model.objects.values_list('date', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
+    # for field in model._meta.get_fields():
+    #     print(field.verbose_name)
+    titles = [field.verbose_name for field in model._meta.get_fields()][5:]
     data = {
-     'values': values,
-        'ai1': list(model.objects.values_list('ai1', flat=True)[:limit]),
-        'ai2': list(model.objects.values_list('ai2', flat=True)[:limit]),
-        'ai3': list(model.objects.values_list('ai3', flat=True)[:limit]),
-        'ai4': list(model.objects.values_list('ai4', flat=True)[:limit]),
-        'ai5': list(model.objects.values_list('ai5', flat=True)[:limit]),
-        'ai6': list(model.objects.values_list('ai6', flat=True)[:limit]),
-        'ai7': list(model.objects.values_list('ai7', flat=True)[:limit]),
-        'ai8': list(model.objects.values_list('ai8', flat=True)[:limit]),
-        'ai9': list(model.objects.values_list('ai9', flat=True)[:limit]),
-        'ai10': list(model.objects.values_list('ai10', flat=True)[:limit]),
+        'values': values,
     }
+    for field in model._meta.get_fields()[5:]:
+        data[field.verbose_name] = list(model.objects.values_list(field.verbose_name, flat=True)[:limit])
+    data['count'] = len(titles)
+    data['titles'] = titles
+    # data = {
+    #  'values': values,
+    #     'ai1': list(model.objects.values_list('ai1', flat=True)[:limit]),
+    #     'ai2': list(model.objects.values_list('ai2', flat=True)[:limit]),
+    #     'ai3': list(model.objects.values_list('ai3', flat=True)[:limit]),
+    #     'ai4': list(model.objects.values_list('ai4', flat=True)[:limit]),
+    #     'ai5': list(model.objects.values_list('ai5', flat=True)[:limit]),
+    #     'ai6': list(model.objects.values_list('ai6', flat=True)[:limit]),
+    #     'ai7': list(model.objects.values_list('ai7', flat=True)[:limit]),
+    #     'ai8': list(model.objects.values_list('ai8', flat=True)[:limit]),
+    #     'ai9': list(model.objects.values_list('ai9', flat=True)[:limit]),
+    #     'ai10': list(model.objects.values_list('ai10', flat=True)[:limit]),
+    #     'count': len(titles),
+    #     'titles': titles,
+    # }
     return JsonResponse(data)
 
 def confirm(request):
@@ -109,7 +121,6 @@ def detail_filter(request):
 
 def detail_table(request, ai):
     model = Obj1Ai
-    # ai = request.session.get('ai', False)
     if ai and ai != 'None':
         data = model.objects.filter(err__gt=0, sts=1, id_ai=ai).order_by('-datain')[:20]
     else:
