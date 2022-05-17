@@ -41,14 +41,14 @@ def index(request):
             return redirect('authenticate/')
         if request.user.is_staff and request.POST.get('user', False):
             request.session['user'] = request.POST.get('user')
-            print(available_model(request))
+    check_user = request.session.get('user', None)
     users = User.objects.filter(is_staff=False)
     available_model(request)
     model = Obj1Ai
     sensors =set(model.objects.values_list('id_ai', flat=True))
     errors = (count_error(ai, model) for ai in sensors)
     sensors_errors = list(zip(sensors, errors))
-    return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors, 'users': users})
+    return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors, 'users': users, 'check_user': check_user})
 
 def auth_user(request):
     if request.POST:

@@ -100,7 +100,9 @@
 					</li>
                 {% if user.is_staff %}
                     <li class="pc-item">
-                    <a class="pc-link">Please, select user, who you want to check</a>
+                    <a class="pc-link">Please, select user, who you want to check.
+                    Now selected: {{ check_user }}
+                    </a>
                         {% for user in users %}
                             <form method="post">
                                 {% csrf_token %}
