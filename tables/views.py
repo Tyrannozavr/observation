@@ -34,33 +34,18 @@ def chart(request):
     limit = 240
     if request.session.get('filter', False):
         limit = request.session['filter']
-    values = model.objects.values_list('date', flat=True)[:limit]
+    # limit = 10
+    values = model.objects.order_by('-date').values_list('date', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
-    # for field in model._meta.get_fields():
-    #     print(field.verbose_name)
     titles = [field.verbose_name for field in model._meta.get_fields()][5:]
     data = {
         'values': values,
     }
     for field in model._meta.get_fields()[5:]:
-        data[field.verbose_name] = list(model.objects.values_list(field.verbose_name, flat=True)[:limit])
+        data[field.verbose_name] = list(model.objects.order_by('-date').values_list(field.verbose_name, flat=True)[:limit])
     data['count'] = len(titles)
     data['titles'] = titles
-    # data = {
-    #  'values': values,
-    #     'ai1': list(model.objects.values_list('ai1', flat=True)[:limit]),
-    #     'ai2': list(model.objects.values_list('ai2', flat=True)[:limit]),
-    #     'ai3': list(model.objects.values_list('ai3', flat=True)[:limit]),
-    #     'ai4': list(model.objects.values_list('ai4', flat=True)[:limit]),
-    #     'ai5': list(model.objects.values_list('ai5', flat=True)[:limit]),
-    #     'ai6': list(model.objects.values_list('ai6', flat=True)[:limit]),
-    #     'ai7': list(model.objects.values_list('ai7', flat=True)[:limit]),
-    #     'ai8': list(model.objects.values_list('ai8', flat=True)[:limit]),
-    #     'ai9': list(model.objects.values_list('ai9', flat=True)[:limit]),
-    #     'ai10': list(model.objects.values_list('ai10', flat=True)[:limit]),
-    #     'count': len(titles),
-    #     'titles': titles,
-    # }
+    print(data['values'])
     return JsonResponse(data)
 
 def confirm(request):
@@ -97,17 +82,17 @@ def detail_chart(request, ai):
     if request.session.get('detail_count', False):
         limit = request.session['detail_count']
     # ai = request.session.get('detail_filter', False)
-    values = model.objects.filter(id_ai=ai).values_list('datain', flat=True)[:limit]
+    values = model.objects.filter(id_ai=ai).order_by('-datain').values_list('datain', flat=True)[:limit]
     values = [i.strftime('%d %B %H:%M') for i in values]
     data = {
      'values': values,
-        'mode': list(model.objects.filter(id_ai=ai).values_list('mode', flat=True)[:limit]),
-        'aimean': list(model.objects.filter(id_ai=ai).values_list('aimean', flat=True)[:limit]),
-        'statmin': list(model.objects.filter(id_ai=ai).values_list('statmin', flat=True)[:limit]),
-        'statmax': list(model.objects.filter(id_ai=ai).values_list('statmax', flat=True)[:limit]),
-        'mlmin': list(model.objects.filter(id_ai=ai).values_list('mlmin', flat=True)[:limit]),
-        'mlmax': list(model.objects.filter(id_ai=ai).values_list('mlmax', flat=True)[:limit]),
-        'err': list(model.objects.filter(id_ai=ai).values_list('err', flat=True)[:limit]),
+        'mode': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('mode', flat=True)[:limit]),
+        'aimean': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('aimean', flat=True)[:limit]),
+        'statmin': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('statmin', flat=True)[:limit]),
+        'statmax': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('statmax', flat=True)[:limit]),
+        'mlmin': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('mlmin', flat=True)[:limit]),
+        'mlmax': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('mlmax', flat=True)[:limit]),
+        'err': list(model.objects.filter(id_ai=ai).order_by('datain').values_list('err', flat=True)[:limit]),
     }
     return JsonResponse(data)
 
