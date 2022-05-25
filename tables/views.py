@@ -51,7 +51,6 @@ def index(request):
     sensors =set(model.objects.values_list('id_ai', flat=True))
     errors = (count_error(ai, model) for ai in sensors)
     sensors_errors = list(zip(sensors, errors))
-    print()
     return render(request, 'tables/index.html', {'now': time, 'sensors_errors': sensors_errors, 'users': users, 'check_user': check_user})
 
 def auth_user(request):

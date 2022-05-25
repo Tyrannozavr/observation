@@ -10,8 +10,9 @@
      <table class="table table-hover table-dark">
          <thead>
              <tr>
-                 <th>id_obj</th>
+{#                 <th>id_obj</th>#}
                  <th>id_ai</th>
+                 <th>data</th>
                  <th>datain</th>
                  <th>mode</th>
                  <th>aimax</th>
@@ -24,14 +25,14 @@
                  <th>error</th>
                  <th>sts</th>
                  <th>confirm</th>
-
              </tr>
          </thead>
          <tbody>
              {% for i in data %}
              <tr>
-                 <td>{{ i.id_obj_id }} </td>
+{#                 <td>{{ i.id_obj_id }} </td>#}
                  <td>{{ i.id_ai_id }}</td>
+                 <td>{{ i.data }}</td>
                  <td>{{ i.datain }}</td>
                  <td>{{ i.mode }}</td>
                  <td>{{ i.aimax }}</td>

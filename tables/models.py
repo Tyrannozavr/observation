@@ -68,10 +68,8 @@ class Obj1Ai(models.Model):
 
     def __str__(self):
         return self.id_ai.name
-        # return ': '.join([self.id_obj.name, self.id_ai.name])
 
 class Obj2Cmn(models.Model):
-    # id_obj = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
     amount = models.IntegerField()
     date = models.DateTimeField()
@@ -88,8 +86,8 @@ class Obj2Cmn(models.Model):
     ai10 = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
 class Obj2Ai(models.Model):
-    id_obj = models.ForeignKey(Objects, on_delete=models.CASCADE)
     id_ai = models.ForeignKey(Sensor, on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     datain = models.DateTimeField()
     mode = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     aimax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -99,18 +97,18 @@ class Obj2Ai(models.Model):
     statmax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     mlmin = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     mlmax = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    err = models.CharField(max_length=7, choices=(
+    err = models.CharField(max_length=7, null=False, blank=False, choices=(
             ('0', 'Система в норме'),
             ('1', 'Аварийная нижняя граница'),
             ('2', 'Предупредительная нижняя граница'),
             ('3', 'Предупредительная верхняя граница'),
             ('4', 'Аварийная верхняя граница'),)
     )
-    sts = models.CharField(max_length=7, choices=(
+    sts = models.CharField(max_length=7, null=False, blank=False, choices=(
            ('0', 'Система в норме'),
            ('1', 'Не подтвержден'),
-           ('2', 'Подтвержден'))
+           ('2', 'Подтвержден'), )
     )
     dataout = models.DateTimeField()
     datacheck = models.DateTimeField()
-    cmnt = models.CharField(max_length=50, blank=True)
+    cmnt = models.CharField(max_length=50, null=True, blank=True)
