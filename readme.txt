@@ -1,5 +1,5 @@
 sudo apt install postgresql postgresql-contrib
-
+Test
 1) sudo -u postgres psql postgres
 2) \password postgres (например: 123456)
 3) create user user_name with password 'password';
